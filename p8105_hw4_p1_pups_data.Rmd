@@ -1,0 +1,54 @@
+---
+title: "p8105_hw4_p1_pups_data"
+author: "Yulan Zhang"
+date: "October 25, 2017"
+output: html_document
+---
+
+```{r load library, message = FALSE}
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(forcats)
+library(ggridges)
+```
+Problem 1
+
+One member of the partnership will take the role of “project lead” and the other of “collaborator”. The project lead should:
+
+`create a directory
+`put an R project in the directory
+`initialize Git
+`add the collaborator as a collaborator on GitHub
+`start an R Markdown file for this problem
+This problem uses the pups dataset. Because this dataset is small and can be made public you should include that data file in your directory for this problem, and load that data file using relative paths.
+
+```{r load tidy data}
+pups_data = read_csv("./data/FAS_pups.csv",
+  col_types = "ciiiii") %>%
+  clean_names() %>%
+  gather(key = outcome, value = post_natal_days, pd_ears:pd_walk) %>%
+  mutate(
+    outcome = str_replace(outcome, "pd_", "")
+    ) %>%
+  filter(post_natal_days != "NA")
+```
+
+```{r plot}
+pups_data %>% 
+  mutate(outcome = fct_reorder(outcome, post_natal_days)) %>%
+  ggplot(aes(y = outcome, x = post_natal_days)) +
+  geom_density_ridges(bandwidth = 0.25) +
+  labs(
+    title = "distribution of post-natal days for each developmental landmark",
+    x = "Post-natal Days",
+    y = "Developmental Landmark",
+    caption = "distribution of post-natal days for each developmental landmark"
+  )
+?geom_density_ridges
+```
+The project lead will load and tidy the data for this problem. The original data file includes data in “wide” format: the post-natal days on which developmental landmarks are reached are stored in columns called PD_outcome. The project lead will convert these data to “long” format, using reasonable variable names and values.
+
+The collaborator will create a plot showing the distribution of post-natal days for each developmental landmark.
+
+The R Markdown document in your GitHub repository should produce a file including code and text that explains the analyses and results for this problem.
