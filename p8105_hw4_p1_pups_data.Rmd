@@ -26,5 +26,29 @@ pups_data = read_csv("./data/FAS_pups.csv",
   filter(post_natal_days != "NA")
 ```
 
+```{r make the plot}
+
+pups_data %>% 
+  mutate(outcome = fct_reorder(outcome, post_natal_days)) %>%
+  ggplot(aes(y = outcome, x = post_natal_days, color = outcome, fill = outcome) ) +
+  geom_density_ridges(bandwidth = 0.25) +
+  labs(
+    title = "distribution of post-natal days for each developmental landmark",
+    x = "Post-natal Days",
+    y = "Developmental Landmark",
+    caption = "distribution of post-natal days for each developmental landmark"
+  )
+?geom_density_ridges
+```
+
+
+The plot illustrates the distribution of post-natal days for each developmental landmark. We observe that the four outcomes of interest, ears, pivot, walk and eyes develop from 2 days to 15 days post-natal: 
+
+- Ear development is mostly distributed at 4 days post-natal.
+- Pivot development has a wide distribution from 4 days to 9 days post-natal.
+- Walk development also has a wide distribution but ranges from 6 days to 14 days post-natal.
+- Lastly eye development is mostly seen at 13 days post-natal.
+
+
 
 
