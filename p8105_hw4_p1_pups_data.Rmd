@@ -33,12 +33,11 @@ pups_data %>%
   ggplot(aes(y = outcome, x = post_natal_days, color = outcome, fill = outcome) ) +
   geom_density_ridges(bandwidth = 0.25) +
   labs(
-    title = "distribution of post-natal days for each developmental landmark",
+    title = "Distribution of post-natal days for each developmental landmark",
     x = "Post-natal Days",
     y = "Developmental Landmark",
-    caption = "distribution of post-natal days for each developmental landmark"
+    caption = "Distribution of post-natal days for each developmental landmark"
   )
-?geom_density_ridges
 ```
 
 
